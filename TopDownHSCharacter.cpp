@@ -801,7 +801,7 @@ void ATopDownHSCharacter::FinishedLoadingData()//Called by the game state after 
 	}
 	else
 	{
-		if (aiManager)
+		if (aiManager && !animInstance->bDeath) //Need to check for death here as we save data when the player dies which ends up calling this function
 			aiManager->NextWave();
 	}
 }

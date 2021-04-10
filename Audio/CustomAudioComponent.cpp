@@ -38,3 +38,11 @@ void UCustomAudioComponent::FadeInSoundEffectAtIndex(int index_)
 		}
 	}
 }
+
+USoundBase* UCustomAudioComponent::GetSoundAtIndex(int index_)
+{
+	if (index_ >= 0 && index_ < soundEffects.Num())
+		return soundEffects[index_];
+
+	return nullptr;
+}

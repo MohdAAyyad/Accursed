@@ -7,6 +7,7 @@
 #include "Engine/World.h"
 #include "TimerManager.h"
 #include "Engine/Classes/Kismet/GameplayStatics.h"
+#include "../Audio/CustomAudioComponent.h"
 
 ADelayedProjectile::ADelayedProjectile():AEnemyProjectileBase()
 {
@@ -26,6 +27,15 @@ void ADelayedProjectile::BeginPlay()
 void ADelayedProjectile::EnableProjectileCollision()
 {
 	//Enable the collision and spawn the impact
+	if (impactAudioComponent->IsPlaying())
+		impactAudioComponent->Stop();
+
+	if (impactAudioComponent)
+	{
+		USoundBase* sound_ = impactAudioComponent->GetSoundAtIndex(1);
+		if(sound_)
+			UGameplayStatics::SpawnSoundAtLocation(GetWorld(), sound_, GetActorLocation());
+	}
 	if (impact)
 		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), impact, GetActorLocation(), FRotator::ZeroRotator);
 	sphere->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
@@ -52,6 +62,12 @@ void ADelayedProjectile::SphereApplyDamage(UPrimitiveComponent* overlappedCompon
 		if (player_)
 		{
 			player_->PlayerTakeDamage(projDamage);
+			if (impactAudioComponent)
+			{
+				USoundBase* sound_ = impactAudioComponent->GetSoundAtIndex(2);
+				if (sound_)
+					UGameplayStatics::SpawnSoundAtLocation(GetWorld(), sound_, GetActorLocation());
+			}
 			Destroy();
 		}
 	}

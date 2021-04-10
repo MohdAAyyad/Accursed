@@ -44,6 +44,11 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 		FWaveInfo waveInfo;
 
+	UPROPERTY(EditAnywhere, Category = "Enemies")
+		float enemyHealthIncrease; //Enemy health increases every 2 waves by this value
+
+	float baseEnemyHealthIncrease; //The actual value passed on to increase the enemy health
+
 
 	int numOfEnemiesDefeatedInCurrentWave;
 	int numOfEnemiesSpawned;

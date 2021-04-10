@@ -104,7 +104,7 @@ void AEnemyBossOne::AskAIManagerToSpawnEnemies()
 {
 	if (aiManager)
 	{
-		AEnemyBase* enm = aiManager->SpawnEnemiesForParentEnemy(4);
+		AEnemyBase* enm = aiManager->SpawnEnemiesForParentEnemy(2);
 		mages.Push(enm);
 		if (enm)
 			enm->SetParentEnemy(this);

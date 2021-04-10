@@ -40,6 +40,8 @@ protected:
 	void EndStagger();
 	void BaseAttack() override;
 	void EndDeath() override;
+
+	void EnemyTakeHitCommonFunctionCalls() override;
 	
 
 	UFUNCTION()

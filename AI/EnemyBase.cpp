@@ -60,15 +60,21 @@ void AEnemyBase::Tick(float DeltaTime)
 	{
 		if (!animInstance->bHit)
 		{
-			if (decisionComp->currentState == EEnemyState::PURSUING) //If you're pursuing the target, rotate and move towards them
-			{
-				FVector Direction = decisionComp->target->GetActorLocation() - GetActorLocation();
-				FVector normalizedDirection = Direction;
-				FRotator rot_ = GetActorRotation();
+			//Always face the player
 
-				normalizedDirection.Normalize();
+			FVector Direction = decisionComp->target->GetActorLocation() - GetActorLocation();
+			FVector normalizedDirection = Direction;
+			FRotator rot_ = GetActorRotation();
+
+			normalizedDirection.Normalize();
+			//if (animInstance->attackIndex < 0) //If you're already attacking, don't rotate
+			//{
 				rot_.Yaw = FMath::Lerp(GetActorRotation().Yaw, normalizedDirection.Rotation().Yaw, 0.05f);
-				SetActorRotation(rot_); //Always face the player when pursuing
+				SetActorRotation(rot_);
+			//}
+
+			if (decisionComp->currentState == EEnemyState::PURSUING) //If you're pursuing the target,  move towards them
+			{
 				if (Direction.Size() > decisionComp->attackingRadius)
 				{
 					AddMovementInput(normalizedDirection, 1.0f);
@@ -436,4 +442,10 @@ void AEnemyBase::WakeUp()
 void AEnemyBase::SetParentEnemy(AEnemyBase* enm_)
 {
 	parentEnemy = enm_;
+}
+
+void AEnemyBase::IncreaseEnemyHealth(float hp_)
+{
+	maxHP += hp_;
+	currentHP = maxHP;
 }

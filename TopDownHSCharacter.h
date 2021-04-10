@@ -119,7 +119,8 @@ public:
 	FPassiveBoosts()
 	{
 		damageReductionPercentage = attackDamageIncreasePercentage = specialDamageIncreasePercentage =
-			moveSpeedIncreasePercentage = revengeDamage = dashDamageIncreasePercentage = castDamageIncreasePercentage=  0.0f;
+			moveSpeedIncreasePercentage = revengeDamage = dashDamageIncreasePercentage = castDamageIncreasePercentage= revengePercentage = brittleIncreasedDamage = poisonIncreasedDamage =
+			rootIncreasedDamage = 0.0f;
 		revengeAffliction = EAfflictions::NONE;
 	}
 

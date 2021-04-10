@@ -80,17 +80,17 @@ TArray<FBoostsTable> ABoost::GetPossibleBoosts()
 		if (catChance_ <= 10)
 		{
 			boosts_[i].category = 3;
-			boosts_[i].boostValue += 0.4f; //Elite
+			boosts_[i].boostValue += 0.2f; //Elite
 		}
 		else if (catChance_ <= 25)
 		{
 			boosts_[i].category = 2;
-			boosts_[i].boostValue += 0.3f; //Rare
+			boosts_[i].boostValue += 0.1f; //Rare
 		}
 		else if (catChance_ <= 50)
 		{ 
 			boosts_[i].category = 1;
-			boosts_[i].boostValue += 0.2f; //Uncommon
+			boosts_[i].boostValue += 0.08f; //Uncommon
 		}
 		else
 		{

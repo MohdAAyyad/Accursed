@@ -121,6 +121,9 @@ void AAudioManager::PlayDemonVoiceLine(int index_)
 void AAudioManager::DelayedPlayDemonVoiceLine()
 {
 	if (demonVoiceAudioComponent)
-		demonVoiceAudioComponent->PlaySoundEffectAtIndex(demonVoiceIndex);
+	{
+		if(!demonVoiceAudioComponent->IsPlaying())
+			demonVoiceAudioComponent->PlaySoundEffectAtIndex(demonVoiceIndex);
+	}
 }
 

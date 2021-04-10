@@ -32,6 +32,8 @@ protected:
 		class UParticleSystemComponent* particles;
 	UPROPERTY(EditAnywhere, Category = "Particles")
 		class UParticleSystem* impact;
+	UPROPERTY(EditAnywhere, Category = "Audio Component")
+		class UCustomAudioComponent* impactAudioComponent;
 
 
 	UFUNCTION()

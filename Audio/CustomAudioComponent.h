@@ -19,10 +19,11 @@ public:
 	void InitValues(float volume_, float pitch_);
 	void PlaySoundEffectAtIndex(int index_);
 	void FadeInSoundEffectAtIndex(int index_);
+	class USoundBase* GetSoundAtIndex(int index_);
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "SoundEffects")
-		TArray<class USoundBase*> soundEffects;
+		TArray<USoundBase*> soundEffects;
 	UPROPERTY(EditAnywhere, Category = "SoundEffects")
 		float fadeInDuration;
 

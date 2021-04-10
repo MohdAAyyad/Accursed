@@ -7,6 +7,7 @@
 #include "Engine/Classes/Particles/ParticleSystemComponent.h"
 #include "Engine/Classes/Kismet/GameplayStatics.h"
 #include "../TopDownHSCharacter.h"
+#include "../Audio/CustomAudioComponent.h"
 
 // Sets default values
 AEnemyProjectileBase::AEnemyProjectileBase()
@@ -36,6 +37,9 @@ AEnemyProjectileBase::AEnemyProjectileBase()
 	particles = CreateDefaultSubobject<UParticleSystemComponent>(TEXT("Particles"));
 	particles->SetupAttachment(root);
 
+	impactAudioComponent = CreateDefaultSubobject<UCustomAudioComponent>(TEXT("Demon voice Audio Component"));
+	impactAudioComponent->SetupAttachment(root);
+
 }
 
 // Called when the game starts or when spawned
@@ -44,6 +48,8 @@ void AEnemyProjectileBase::BeginPlay()
 	Super::BeginPlay();
 	if(sphere)
 		sphere->OnComponentBeginOverlap.AddDynamic(this, &AEnemyProjectileBase::SphereApplyDamage);
+	if(impactAudioComponent)
+		impactAudioComponent->PlaySoundEffectAtIndex(0);
 	
 }
 
@@ -61,6 +67,12 @@ void AEnemyProjectileBase::SphereApplyDamage(UPrimitiveComponent* overlappedComp
 		if (player_)
 		{
 			player_->PlayerTakeDamage(projDamage);
+			if (impactAudioComponent)
+			{
+				USoundBase* sound_ = impactAudioComponent->GetSoundAtIndex(1);
+				if (sound_)
+					UGameplayStatics::SpawnSoundAtLocation(GetWorld(), sound_, GetActorLocation());
+			}
 		}
 
 		if (impact)

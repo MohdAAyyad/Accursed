@@ -139,6 +139,7 @@ public:
 
 	void SetAIManager(AAIManager* aiMgrRef_);
 
+	void IncreaseEnemyHealth(float hp_);
 
 	UFUNCTION(BlueprintCallable)
 		virtual void BaseAttack(); //Used by common enemies who only have one attack

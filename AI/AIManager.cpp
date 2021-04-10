@@ -27,6 +27,9 @@ AAIManager::AAIManager()
 
 	numOfEnemiesDefeatedInCurrentWave = numOfEnemiesSpawned = 0;
 	waveInfo = FWaveInfo();
+
+	enemyHealthIncrease = 20.0f;
+	baseEnemyHealthIncrease = 0.0f;
 }
 
 // Called when the game starts or when spawned
@@ -87,12 +90,13 @@ void AAIManager::NextWave()
 void AAIManager::SpawnEnemies()
 {
 	int waveId_ = Intermediate::GetInstance()->currentWaveID;
-	if (waveId_ % 3 == 0) //Every five waves, have the demon say sth. First wave as well
+	if (waveId_ % 2 == 0) //Every two waves, have the demon say sth. First wave as well
 	{
 		if (audioManager)
 			audioManager->PlayDemonVoiceLine(2);
+
+		baseEnemyHealthIncrease += enemyHealthIncrease; //Enemy health increase
 	}
-	UE_LOG(LogTemp, Warning, TEXT("numOfEnemiesSpawned = %d and  waveInfo.numOfEnemiesToSpawnl = %d"), numOfEnemiesSpawned, waveInfo.numOfEnemiesToSpawn);
 	//Spawn the number of enemies designtated by the wave info
 	if (numOfEnemiesSpawned <= waveInfo.numOfEnemiesToSpawn)
 	{
@@ -101,7 +105,6 @@ void AAIManager::SpawnEnemies()
 		//We want to spawn a number of enemies per interval (4 at a time for example)
 		for (int i = 0; i < waveInfo.numOfEnemiesPerInterval;)
 		{
-			UE_LOG(LogTemp, Warning, TEXT("Entering spawn loop"));
 			int locIndex_ = FMath::RandRange(0, enemySpawnLocations.Num() - 1);
 			if (!prevIndexes.Contains(locIndex_))
 			{
@@ -114,10 +117,10 @@ void AAIManager::SpawnEnemies()
 					if (enemy_)
 					{
 						enemy_->SetAIManager(this);
+						enemy_->IncreaseEnemyHealth(baseEnemyHealthIncrease);
 						prevIndexes.Push(locIndex_);
 						numOfEnemiesSpawned++;
 						i++;
-						UE_LOG(LogTemp, Warning, TEXT("Spawned the damn thing"));
 					}
 				}
 			}

@@ -12,6 +12,7 @@
 #include "AIManager.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystemComponent.h"
+#include "Components/WidgetComponent.h"
 
 AEnemyCharger::AEnemyCharger() :AEnemyBase()
 {
@@ -95,6 +96,18 @@ void AEnemyCharger::Tick(float DeltaTime)
 			rot_.Yaw = FMath::Lerp(GetActorRotation().Yaw, normalizedDirection.Rotation().Yaw, 0.05f);
 			SetActorRotation(rot_); //Always face the player when pursuing
 		}
+}
+
+void AEnemyCharger::EnemyTakeHitCommonFunctionCalls()
+{
+	if (!widgetComp->IsVisible())
+		widgetComp->SetVisibility(true);
+	if (animInstance->attackIndex < 1)
+	{
+		if (animInstance)
+			animInstance->EnableHit();
+		EnemyCheckStagger();
+	}
 }
 
 void AEnemyCharger::EndCharge()
